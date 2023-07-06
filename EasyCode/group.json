@@ -34,5 +34,25 @@
     "typeMapperName": "Default.json",
     "tableNameRegex": ".*",
     "schemaNameRegex": ".*"
+  },
+  {
+    "groupName": "Yt4j",
+    "templateName": "yt4jTemplate",
+    "globalConfigName": "MybatisCodeHelperPro",
+    "columnConfigName": "Default.json",
+    "typeMapperName": "Default.json",
+    "tableNameRegex": ".*",
+    "schemaNameRegex": ".*"
+  },
+  {
+    "groupName": "Wukong",
+    "templateName": "WukongTemplate",
+    "globalConfigName": "MybatisCodeHelperPro",
+    "columnConfigName": "Default.json",
+    "typeMapperName": "Default.json",
+    "tableNameRegex": ".*",
+    "schemaNameRegex": ".*"
   }
+
+
 ]
