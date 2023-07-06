@@ -57,17 +57,17 @@
   {
     "matchType": "ORDINARY",
     "columnType": "datetime",
-    "javaType": "java.util.Date"
+    "javaType": "java.time.LocalDateTime"
   },
   {
     "matchType": "ORDINARY",
     "columnType": "timestamp",
-    "javaType": "java.util.Date"
+    "javaType": "java.time.LocalDateTime"
   },
   {
     "matchType": "ORDINARY",
     "columnType": "time",
-    "javaType": "java.time.LocalTime"
+    "javaType": "java.time.LocalDateTime"
   },
   {
     "matchType": "ORDINARY",

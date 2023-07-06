@@ -1,19 +1,19 @@
 ##following code can be generated use MybatisCodeHelperPro plugin mybatis generator mingrate to template generate.
 ##copy group for different project.
-#set($javamodelSrcFolder="${projectPath}/src/main/java")
-#set($modelPackageName="com.model")
-#set($mapperSrcFolder="${projectPath}/src/main/java")
-#set($mapperPackageName="com.mapper")
-#set($mapperXmlFolder="${projectPath}/src/main/resources")
-#set($mapperXmlPackage="mapperxml")
-#set($serviceSrcFolder="${projectPath}/src/main/java")
-#set($servicePackageName="com.service")
-#set($serviceImplSrcFolder="${projectPath}/src/main/java")
-#set($serviceImplPackageName="com.service.impl")
-#set($controllerSrcFolder="${projectPath}/src/main/java")
-#set($controllerPackageName="com.controller")
+#set($javamodelSrcFolder="${modulePath}/src/main/java")
+#set($modelPackageName="${tableInfo.savePackageName}.entity.PO")
+#set($mapperSrcFolder="${modulePath}/src/main/java")
+#set($mapperPackageName="${tableInfo.savePackageName}.mapper")
+#set($mapperXmlFolder="${modulePath}/src/main/java")
+#set($mapperXmlPackage="${tableInfo.savePackageName}.mapper.xml")
+#set($serviceSrcFolder="${modulePath}/src/main/java")
+#set($servicePackageName="${tableInfo.savePackageName}.service")
+#set($serviceImplSrcFolder="${modulePath}/src/main/java")
+#set($serviceImplPackageName="${tableInfo.savePackageName}.service.impl")
+#set($controllerSrcFolder="${modulePath}/src/main/java")
+#set($controllerPackageName="${tableInfo.savePackageName}.controller")
 #set($useLombok=true)
-#set($useSwagger=false)
+#set($useSwagger=true)
 #set($useOpenApi=false)
 #set($addSchemaName=false)
 #set($mapperSuffix="Mapper")
@@ -25,3 +25,7 @@
         $!column.setName($column.obj.name)
     #end
 #end
+
+##去掉表的t_前缀
+$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst("wk_","")))
+

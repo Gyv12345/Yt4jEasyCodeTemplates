@@ -1,42 +1,68 @@
-##导入宏定义
+#* @vtlvariable name="modelPackageName" type="java.lang.String" *#
+##引入宏定义
 $!{define.vm}
 $!{mybatisCodehelper.vm}
+
+##使用宏定义设置回调（保存位置与文件后缀）
+###save("/entity", ".java")
 
 #set($entitySavePath = $tool.append(${javamodelSrcFolder},"/",${modelPackageName.replace(".","/")}))
 
 $!callback.setSavePath($entitySavePath)
 $!callback.setFileName($tool.append($tableInfo.name, ".java"))
-
-##自动导入包（全局变量）
+##使用宏定义设置包后缀
 package ${modelPackageName};
-$!autoImport
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+##使用全局变量实现默认包导入
+$!{autoImport.vm}
 import java.io.Serializable;
+#if(${useLombok})
+import lombok.Data;
+import lombok.ToString;
+#end
+#if($useSwagger)
+import io.swagger.annotations.ApiModel;
+#end
 
-##表注释（宏定义）
-#tableComment("表实体类")
-@SuppressWarnings("serial")
-public class $!{tableInfo.name} extends Model<$!{tableInfo.name}> {
+#if($useOpenApi)
+import io.swagger.v3.oas.annotations.media.Schema;
+
+#end
+
+##使用宏定义实现类注释信息
+#tableComment("实体类")
+
+##check if use lombok
+
+#if(${useLombok})
+@Data
+@ToString
+#end
+
+#if($useSwagger)
+@ApiModel(value = "$!{tableInfo.name}" , description = "$!{tableInfo.comment}" )
+#end
+#if($useOpenApi)
+@Schema(name = "$!{tableInfo.name}" , description = "$!{tableInfo.comment}" )
+#end
+public class $!{tableInfo.name} implements Serializable{
+private static final long serialVersionUID= $!tool.serial();
 #foreach($column in $tableInfo.fullColumn)
-    #if(${column.comment})//${column.comment}#end
+    #if(${column.comment})/**
+     * ${column.comment}
+     */#end
+    #if($useSwagger)
+    @ApiModelProperty(value = "${column.comment}" )
+    #end
+    #if($useOpenApi)
+    @Schema(description = "${column.comment}" )
+    #end
 
-    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};
+private $!{tool.getClsNameByFullName($column.type)} $!{column.name};
+
 #end
 
 #foreach($column in $tableInfo.fullColumn)
-#getSetMethod($column)
+
 #end
 
-#foreach($column in $tableInfo.pkColumn)
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    protected Serializable pkVal() {
-        return this.$!column.name;
-    }
-    #break
-#end
 }
