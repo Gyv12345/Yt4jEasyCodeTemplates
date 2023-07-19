@@ -16,6 +16,7 @@ package ${modelPackageName};
 $!{autoImport.vm}
 import java.io.Serializable;
 #if(${useLombok})
+
 import lombok.Data;
 import lombok.ToString;
 #end
@@ -28,6 +29,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 #end
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 ##使用宏定义实现类注释信息
 #tableComment("实体类")
 
@@ -39,10 +42,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 #end
 
 #if($useSwagger)
-@ApiModel(value = "$!{tableInfo.name}" , description = "$!{tableInfo.comment}" )
+@ApiModel(value = "$!{tableInfo.name}", description = "$!{tableInfo.comment}")
 #end
+@TableName("$!{tableInfo.obj.name}")
 #if($useOpenApi)
-@Schema(name = "$!{tableInfo.name}" , description = "$!{tableInfo.comment}" )
+@Schema(name = "$!{tableInfo.name}", description = "$!{tableInfo.comment}")
 #end
 public class $!{tableInfo.name} implements Serializable{
 private static final long serialVersionUID= $!tool.serial();
@@ -51,10 +55,10 @@ private static final long serialVersionUID= $!tool.serial();
      * ${column.comment}
      */#end
     #if($useSwagger)
-    @ApiModelProperty(value = "${column.comment}" )
+    @ApiModelProperty(value = "${column.comment}")
     #end
     #if($useOpenApi)
-    @Schema(description = "${column.comment}" )
+    @Schema(description = "${column.comment}")
     #end
 
 private $!{tool.getClsNameByFullName($column.type)} $!{column.name};
