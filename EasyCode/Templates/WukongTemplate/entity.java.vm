@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import lombok.Data;
 import lombok.ToString;
+import io.swagger.annotations.ApiModelProperty;
 #end
 #if($useSwagger)
 import io.swagger.annotations.ApiModel;
