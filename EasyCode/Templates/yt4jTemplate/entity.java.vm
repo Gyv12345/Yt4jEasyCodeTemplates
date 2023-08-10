@@ -10,33 +10,39 @@ $!callback.setFileName($tool.append($tableInfo.name, ".java"))
 ##自动导入包（全局变量）
 package ${modelPackageName};
 $!autoImport
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.ToString;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 ##表注释（宏定义）
 #tableComment("表实体类")
-@SuppressWarnings("serial")
-public class $!{tableInfo.name} extends Model<$!{tableInfo.name}> {
-#foreach($column in $tableInfo.fullColumn)
-    #if(${column.comment})//${column.comment}#end
-
-    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};
-#end
+@Data
+@ToString
+public class $!{tableInfo.name} implements Serializable{
+private static final long serialVersionUID= $!tool.serial();
 
 #foreach($column in $tableInfo.fullColumn)
-#getSetMethod($column)
-#end
-
-#foreach($column in $tableInfo.pkColumn)
+    #if(${column.comment})
     /**
-     * 获取主键值
-     *
-     * @return 主键值
+     * ${column.comment}
      */
-    @Override
-    protected Serializable pkVal() {
-        return this.$!column.name;
-    }
-    #break
+    #end
+    #foreach($columnPk in $tableInfo.pkColumn)
+        #if($!{column.name} == $!{columnPk.name})
+        @TableId(value = "id", type = IdType.ASSIGN_ID)
+        #end
+    #end
+    #if($!{column.name} == 'createUserId' or $!{column.name} == 'createTime')
+    @TableField(fill = FieldFill.INSERT)
+    #end
+    #if($!{column.name} == 'updateUserId' or $!{column.name} == 'updateTime')
+    @TableField(fill = FieldFill.UPDATE)
+    #end
+    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};
+
 #end
 }

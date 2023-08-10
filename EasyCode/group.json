@@ -38,7 +38,7 @@
   {
     "groupName": "Yt4j",
     "templateName": "yt4jTemplate",
-    "globalConfigName": "MybatisCodeHelperPro",
+    "globalConfigName": "yt4jConfig",
     "columnConfigName": "Default.json",
     "typeMapperName": "Default.json",
     "tableNameRegex": ".*",
