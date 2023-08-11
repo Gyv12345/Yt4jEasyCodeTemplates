@@ -5,7 +5,7 @@
 #set($mapperSrcFolder="${modulePath}/src/main/java")
 #set($mapperPackageName="${tableInfo.savePackageName}.mapper")
 #set($mapperXmlFolder="${modulePath}/src/main/resources")
-#set($mapperXmlPackage="${tableInfo.savePackageName}.mapper.xml")
+#set($mapperXmlPackage="mapper")
 #set($serviceSrcFolder="${modulePath}/src/main/java")
 #set($servicePackageName="${tableInfo.savePackageName}.service")
 #set($serviceImplSrcFolder="${modulePath}/src/main/java")

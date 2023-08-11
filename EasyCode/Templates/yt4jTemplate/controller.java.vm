@@ -62,7 +62,7 @@ public R<PageResult<$!tableInfo.name>>listPage(@Valid @RequestBody PageRequest<$
  */
 @SysLog("通过主键查询$!{tableInfo.comment}单条数据")
 @GetMapping("get/{id}")
-public R<$!tableInfo.name> selectOne(@PathVariable Serializable id){
+public R<$!tableInfo.name> selectOne(@PathVariable Long id){
         return R.ok(this.$!{serviceName}.getById(id));
         }
 
@@ -74,7 +74,7 @@ public R<$!tableInfo.name> selectOne(@PathVariable Serializable id){
 @SysLog("新增客户表数据")
 @PostMapping("insert")
 public R insert(@RequestBody $!tableInfo.name $!entityName){
-        return R.ok(this.$!{serviceName}.save(crmCustomer));
+        return R.ok(this.$!{serviceName}.save($!entityName));
         }
 
 /**
